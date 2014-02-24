@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IFCWebServer</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap-select.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
+  <script type="text/javascript">
+        $(window).on('load', function () {
+            $('.selectpicker').selectpicker({
+                'selectedText': ''
+            });
+        });
+   </script>
+</head>
+<body>
+<nav class="navbar navbar-inverse" role="navigation">
+  <ul class="nav navbar-nav">
+   <li class="active"><a href='/gobim.rb?q=BIMs_List'>Browse BIMs</a></li>
+   <li> <a href='/scripts_catalog.rb'>Scripts</a></li>
+   <li> <a href='https://drive.google.com/file/d/0B3PRiGtq6fseTnhhQjBhNEs0S2c/edit?usp=sharing'>Help</a></li>
+<li><a href='/login.rb?q=logout'>logout</a></li>
+</ul>
+</nav>
+<form method="POST" action="/ifc.rb" name="form1" target="_blank">
+Models:<%= HTML.select_box_html("ifc_file",Server.ModelsList,"",true,"onchange='filter_classes(this.name)', class='selectpicker'") %>
+Quick select
+<select name="q" class="selectpicker ifc_class" multiple data-live-search="true">
+	<optgroup label="Spatial Elements" data-icon="icon-ok">
+	  <option value="IfcSite">Site</option>
+	  <option value="IfcBuilding">Building</option>
+	  <option value="IfcBuildingStorey">BuildingStorey</option>
+	  <option value="IfcZone">Zone</option>
+	  <option value="IfcSpace">Space</option>
+	</optgroup>
+	<optgroup label="Building Elements" data-icon="icon-ok">
+		<option value="IfcWall">Wall</option>
+		<option value="IfcSlab">Slab</option>
+		<option value="IfcRoof">Roof</option>
+		<option value="IfcColumn">Column</option>
+		<option value="IfcBeam">Beam</option>
+		<option value="IfcStair">Stair</option>
+		<option value="IfcFooting">Footing</option>
+		<option value="IfcMember">Member</option>
+		<option value="IfcDoor">Door</option>
+		<option value="IfcWindow">Window</option>
+		<option value="IfcCurtainWall">CurtainWall</option>	
+	</optgroup>
+</select>
+All Objects
+<%= select_box_ifc_classes("q1","IFC","","","class='selectpicker all_ifc_class' multiple data-live-search='true'") %>
+<button type="submit" class="btn btn-default btl-lg btn-success">Run</button>
+<h4>Options</h4>
+Output format:
+  <input type="radio" name="output_format" value="to_html" checked >HTML</input>
+  <input type="radio" name="output_format" value="to_xml">XML</input>
+  <input type="radio" name="output_format" value="to_ifc">IFC</input>
+  <input type="radio" name="output_format" value="to_csv">CSV</input>
+</br>
+Advanced filter(<a href='http://code.google.com/p/ifcwebserver/wiki/filter_examples' target="_blank">examples</a>)<br/>
+<textarea cols="128" rows="2" name="filter"></textarea><br/></td>
+User-defined report(<a href='http://code.google.com/p/ifcwebserver/wiki/userdefined_reports' target="_blank">Help</a>)<br>
+<textarea cols="128" rows="2" name="report_cols" ></textarea>
+</form>
+<hr>
+</body>
+</html>

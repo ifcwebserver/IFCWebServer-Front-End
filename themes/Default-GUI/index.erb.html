@@ -1,0 +1,70 @@
+<html><head>
+<title>IFCWebServer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="stylesheet" type="text/css" href="/css/dropzone.css">
+<script src="/js/prototype.js" type="text/javascript"></script>
+<script src="/js/index.js"></script>
+</head>
+<body>
+<a href='/'><img border=0 src="/img/logo.png" ></a>
+<div id="top-menu">
+	<a href='/gobim.rb?q=BIMs_List'>Browse BIMs</a>|
+	<a href='#' title='Uplaod IFC models on the server' onclick="dispHandle(upload);">Upload</a>|
+	<a href='/scripts_catalog.rb'>Scripts</a>|		
+    <a href='/login.rb?q=logout'>logout</a>|
+    <a href='https://drive.google.com/file/d/0B3PRiGtq6fseTnhhQjBhNEs0S2c/edit?usp=sharing'>Help</a>
+</div>
+<div id='upload' style="display: none;z-index: 1; left: 5px; top: 50px; width: 580; height: 260px;margin: 20px;padding:5px;background-color:#CADCCB; layer-background-color:#CADCCB;">
+  <h3>Upload new BIM/3D model</h3>
+  <form method="POST" name="datafile" enctype="multipart/form-data" action="index.rb" >
+    Choose a file (*.ifc, *.dae) from your computer and click the upload button<br><br>
+    <input type="file" name="file" size="20"/>
+    <input type="submit" value="Upload"/></br>
+   </form></br>
+</div>
+</br>
+<table>
+  <tr>
+	<td align='center'>
+  	  <form method="POST" action="ifc.rb" name="form1" target="_blank">
+	  <% HTML.select_box("ifc_file",Server.ModelsList,"",true,"onchange="filter_classes(this.name)", style='width:350px'") %>
+    </td>
+    <td valign='top'><div id="webglviewerlink"></div><a id="downloadlink" href=''></a></td>
+  </tr>
+</table>
+</br>
+<table>
+  <tr>
+    <td colspan=3>
+    <input type="text" class="typeahead" value="Ifc" id="search" />
+    <input type="button" value="add to selection"onclick="searchList(this);">
+    <input type="button" value="reset"onclick="reset_selection(this);">
+    </td>
+  </tr>
+  <tr>
+    <td><%create_select_box("q1","Spatial elements","IFC","IFCSPATIALSTRUCTUREELEMENT") %></td>
+    <td><%create_select_box("q2","Building elements","IFC","IFCBUILDINGELEMENT") %></td>
+    <td><%create_select_box("q3","Relations","IFC","IFCRELATIONSHIP",""," style='width:225px'") %></td>
+   </tr>
+</table>
+<table>
+  <tr>
+    <td>Selected classes:<br><select name="q" size="5" width="125" style="width:200px" ondblclick="remove_class(this);" multiple></select></td>
+    <td valign="top">Advanced filter(<a href='http://code.google.com/p/ifcwebserver/wiki/filter_examples' target="_blank">examples</a>)<br/><textarea cols="24" rows="5" name="filter"></textarea><br/></td>
+    <td valign="top">User-defined report(<a href='http://code.google.com/p/ifcwebserver/wiki/userdefined_reports' target="_blank">Help</a>)<br><textarea cols="23" rows="5" name="report_cols" ></textarea></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Output format:</br>
+       <input type="radio" name="output_format" value="to_html" checked >HTML</input></br>
+       <input type="radio" name="output_format" value="to_xml">XML</input></br>
+       <input type="radio" name="output_format" value="to_ifc">IFC</input></br>
+       <input type="radio" name="output_format" value="to_csv">CSV</input></br>
+	</td>
+    <td align='center'><input type="submit" id="mysubmit" value="Go!" style="height:55px;width:75px"/></td>
+  </tr>	
+</table>
+</form>
+<script src="/js/index_footer.js"></script>
+</body></html>
