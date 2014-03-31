@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IFCWebServer-Reporter</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
+  <link rel="stylesheet" type="text/css" href="css/flat.css">
+</head>
+<body>
+<img border="0" src="/img/logo.png">
+<nav class="navbar navbar-inverse" role="navigation">
+  <ul class="nav navbar-nav">
+   <li class="active"><a href='/'>Home</a></li>
+   <li class="active"><a href='/gobim.rb?q=BIMs_List'>Browse BIMs</a></li>
+   <li> <a href='https://drive.google.com/file/d/0B3PRiGtq6fseTnhhQjBhNEs0S2c/edit?usp=sharing'>Help</a></li>
+   <li><a href="/contact.php" title="send us a short message if you have any qustion or if you need help">Contact</a></li>
+   <li><a href='/login.rb?q=logout'>logout</a></li>
+</ul>
+</nav>
+<div style="margin:5px">
+<h4>BIM-Reporter</h4>
+<form method="POST" action="/ifc.rb" name="form1" target="_blank">
+<table>
+<tr>
+<td>
+<i>Select IFC model:</i><br>
+<% $username="user1" if  $username.to_s== "" %>
+<%= HTML.select_box_html("ifc_file",Server.ModelsList,"",false,"size=10 ") %>
+</td>
+<td><div id='model_info' style="width:200px;height:200px"></div></td>
+</tr>
+</tr>
+</table>
+<table>
+<td>
+<i>Select IFC classes:</i><br>
+<select name="q"  id="q"  size=10 style="width:200px"></select>
+</td>
+<td>
+<i>Add report field(double click)</i><br>
+<select name="ifc_attributes" id ="ifc_attributes"  size=10 style="width:200px" ></select>
+</td>
+<td>
+<i>Report fields</i><br>
+<select name="report_fields" id ="report_fields"  size=10 style="width:200px" ></select>
+</td>
+</tr>
+</table>
+<input type="button" value="Reset all" onclick="reset_selection(this);" class="btn btn-default btl-lg btn-warning">
+<br><strong>Report options:</strong><br>
+<i>Filter expression</i>(<a href="http://code.google.com/p/ifcwebserver/wiki/filter_examples" target="_blank">help</a>)<br>
+<textarea cols="64" rows="3" name="filter"></textarea><br>
+<i>Customize report fields:</i><br>
+<textarea cols="64" rows="2" name="report_cols" id="report_cols"></textarea>
+<br><br>
+<button type="submit" class="btn btn-default btl-lg btn-success" style="padding:5px">Run Report</button>
+</form>
+</div>
+<%= $copyright_footer %>
+<script src="js/index.js"></script>
+</body>
+</html>
